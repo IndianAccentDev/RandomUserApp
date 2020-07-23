@@ -34,8 +34,56 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Random Users"),
+      ),
+      body: Container(
+        child: Center(
+          child: isLoading
+          ?  CircularProgressIndicator()
+          : ListView.builder(
+            itemCount: userData == null ? 0 : userData.length,
+            itemBuilder: (context, index){
+              return Card(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(20.0),
+                      child: Image(
+                        width: 70.0,
+                        height: 70.0,
+                        fit: BoxFit.contain,
+                        image: NetworkImage(
+                        userData[index]['picture']['thumbnail']
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+
+                        // Name
+                        Text(
+                          userData[index]['name']['first']+
+                          userData[index]['name']['last'],
+                          style:  TextStyle(fontSize: 20.0),
+                          ),
+
+                        // Phone Number
+                        Text(userData[index]['phone']),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          ),
+        ),
+      ),
     );
   }
 }
