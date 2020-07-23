@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = false;
     });
   }
+  
 
   @override
   void initState() {
@@ -67,13 +69,55 @@ class _HomePageState extends State<HomePage> {
 
                         // Name
                         Text(
-                          userData[index]['name']['first']+
-                          userData[index]['name']['last'],
-                          style:  TextStyle(fontSize: 20.0),
+                          userData[index]['name']['first']+ ' ' + userData[index]['name']['last'],
+                          style:  TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
 
+                        //DOB
+                        // Text("DOB: ${jsonEncode(userData[index]['dob']['date']).toString().substring(1,11)}"),
+                        Text("DOB: ${jsonEncode(userData[index]['dob']['date']).toString().substring(1,11)}"),
+
+                        // Age
+                        Text("Age: ${userData[index]['dob']['age']}"),
+                        // Gender
+                        Text("Gender: ${userData[index]['gender']}"),
+
                         // Phone Number
-                        Text(userData[index]['phone']),
+                        RichText(
+                          text: TextSpan(
+                            style : Theme.of(context).textTheme.body1,
+                            children: [
+                              WidgetSpan(
+                                child: Icon(Icons.phone, size: 14),
+                              ),
+                              TextSpan(
+                                text: "${userData[index]['phone']}",
+                              ),
+                            ],
+                          ),
+                        ),
+
+
+                      // Email
+                        RichText(
+                          text: TextSpan(
+                            style : Theme.of(context).textTheme.body1,
+                            children: [
+                              WidgetSpan(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.email, size: 14),
+                                ),
+                              ),
+                              TextSpan(
+                                text: "${userData[index]['email']}",
+                                style: TextStyle(fontFamily: 'Lobster'),
+                              ),
+                            ],
+                          ),
+                        ),
+
+
                         ],
                       ),
                     ),
